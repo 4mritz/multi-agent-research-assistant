@@ -1,0 +1,6 @@
+openai
+ollama
+arxiv
+faiss-cpu
+pydantic
+python-dotenv
