@@ -1,1 +1,7 @@
 /agentvenv
+agentvenv/
+__pycache__/
+*.pyc
+.env
+logs/
+reports/
