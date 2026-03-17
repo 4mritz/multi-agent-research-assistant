@@ -1,29 +1,23 @@
-import json
-
 from agents.base_agent import BaseAgent
 
 
 class PlannerAgent(BaseAgent):
     def __init__(self, model_name: str):
         system_prompt = (
-            "You are a research planning agent. Given a user research question, "
-            "return only valid JSON with keys: topic, search_queries, analysis_tasks. "
-            "search_queries and analysis_tasks must be lists of concise strings."
+            "You are a research planning agent. Convert a research question into "
+            "structured search queries and return only valid JSON."
         )
-        super().__init__(model_name, system_prompt)
+        super().__init__(model_name, system_prompt, expect_json=True)
 
     def run(self, input_text: str) -> dict:
         prompt = (
-            "Create a research plan for this question:\n"
-            f"{input_text}\n\n"
-            'Output format: {"topic":"...","search_queries":["..."],"analysis_tasks":["..."]}'
+            "Convert this research question into a structured search plan.\n"
+            f"Question: {input_text}\n\n"
+            "Return valid JSON only in this format:\n"
+            '{'
+            '"topic":"...",'
+            '"search_queries":["...","...","..."],'
+            '"analysis_focus":["architectures","datasets","evaluation methods"]'
+            "}"
         )
-        output = super().run(prompt)
-        try:
-            return json.loads(output)
-        except json.JSONDecodeError:
-            return {
-                "topic": input_text,
-                "search_queries": [input_text],
-                "analysis_tasks": [output.strip()],
-            }
+        return super().run(prompt)

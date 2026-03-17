@@ -7,14 +7,16 @@ from orchestrator.pipeline import run_research_pipeline
 def main():
     parser = argparse.ArgumentParser(description="Multi-agent research assistant")
     parser.add_argument("question", help="Research question")
-    parser.add_argument("--planner-model", default="gpt-4.1-mini")
-    parser.add_argument("--llm-model", default="gpt-4.1-mini")
+    parser.add_argument("--planner-model", default="ollama:llama3.1:8b-instruct-q4_K_M")
+    parser.add_argument("--llm-model", default="ollama:llama3.1:8b-instruct-q4_K_M")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 
     report = run_research_pipeline(
         research_question=args.question,
         planner_model=args.planner_model,
         llm_model=args.llm_model,
+        debug=args.debug,
     )
 
     print(report)

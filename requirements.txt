@@ -4,3 +4,5 @@ arxiv
 faiss-cpu
 pydantic
 python-dotenv
+networkx
+matplotlib
